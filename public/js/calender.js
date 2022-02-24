@@ -3,7 +3,7 @@ $(document).ready(function (params) {
      $('#updateForm')
     */
    $.ajax({
-     url:'http://localhost:3000/todos/setCalender',
+     url:'https://my-2dos.herokuapp.com/todos/setCalender',
      method:"get",
      success:function (e) {
        var arr=e.map((e)=>{

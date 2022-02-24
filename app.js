@@ -18,7 +18,7 @@ app.use(bodyparser.json())
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'hbs');
 app.set('views', 'views');
-
+const todo=require('./controller/todos');
 app.engine('html', require('hbs').__express);
 hbs.registerPartials(__dirname + '/views/partials');
 hbs.registerPartial('header',"{{header}}")
@@ -61,8 +61,8 @@ const expressApp=app.listen(port,()=>{
 
 const todos=require('./routes/todos')
 app.use(flash());
+app.use('/',todo.getHome)
 app.use('/auth',user)
-
 app.use('/todos',auth,todos)
   
 app.use((req,res)=>{

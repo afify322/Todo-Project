@@ -3,7 +3,7 @@ const todo=require('../controller/todos');
 
 
 
-router.get('/home',todo.getHome)
+
 router.get('/main',todo.getTodos)
 router.get('/addTodo/:list',todo.getAddTodo)
 router.get('/delete/:id',todo.deleteTodo)
