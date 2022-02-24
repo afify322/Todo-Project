@@ -61,10 +61,9 @@ const expressApp=app.listen(port,()=>{
 
 const todos=require('./routes/todos')
 app.use(flash());
-app.use('/',todo.getHome)
 app.use('/auth',user)
 app.use('/todos',auth,todos)
-  
+app.use('/',todo.getHome)
 app.use((req,res)=>{
   res.render('404')
 })
