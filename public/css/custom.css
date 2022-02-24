@@ -1,0 +1,39 @@
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY3VzdG9tLmNzcyIsInNvdXJjZXMiOlsiY3VzdG9tLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9 */
+
+/*# sourceMappingURL=custom.css.map */
+
+
+.main-sidebar .sidebar-brand a
+.header-logo{
+    height: 65px;
+}
+
+/* .fc-agendaWeek{
+    display: none       ;
+}
+.fc-agendaDay-button{
+    display: none;
+} */
+select *{
+    margin: auto;
+    width: auto;
+    font-size: 17px;
+}
+
+.time{
+    margin-top: 0px;
+    width: 100%;
+    font-size: 15px;
+    margin: auto;
+}
+.fa-exclamation-triangle{
+    font-size: 35px;
+    color: yellow;
+    margin: auto;
+    width: 40px;
+    margin-left: 115px;
+}
+.dropdown-list-message{
+    padding: 7px;
+}
