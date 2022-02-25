@@ -13,11 +13,11 @@ module.exports=class Todos{
         this.name=name;
         this.list=list;
         this.desc=desc;
-        this.expire=moment(new Date(expire)).add(2, 'h').toDate();
+        this.expire=new Date(expire)
         this.finished=finished;
-        this.createdAt=moment(new Date()).add(2, 'h').toDate();
+        this.createdAt=new Date()
 
-        this.modifiedAt=moment(new Date()).add(2, 'h').toDate();
+        this.modifiedAt=new Date()
         this.deleted=false;
 
     }
