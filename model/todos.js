@@ -54,7 +54,7 @@ module.exports=class Todos{
     }
     static update(id,data){
         return db.collection('todos').then((e)=>{
-            var newDateObj = moment(data.expire).add(2, 'h').toDate();
+            var newDateObj =data.expire
             data.expire=newDateObj
             return e.updateOne({_id:ObjectId(id)},{$set:data})
         }).then((e)=>{
@@ -142,10 +142,10 @@ module.exports=class Todos{
         })
       }
 
-      static expire(user,date){
+      static expire(user,date,current){
         return db.collection('todos').then((e)=>{
             return e.aggregate([
-                {$match:{expire:{$gte:new Date(),$lte:date}}},
+                {$match:{expire:{$gte:current,$lte:date}}},
                 {$match:{userId:user._id}},
                 {"$group":{_id:{list:'$list'}, count:{$sum:1}, todo: {$push: { name: '$name', desc: '$desc', expire: { $dateToString: { format: "%Y/%m/%d %H:%M:%S", date: "$expire" } },id:"$_id" }}}} , 
             
