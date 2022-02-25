@@ -144,6 +144,7 @@ module.exports=class Todos{
 
       static expire(user,date,current){
         return db.collection('todos').then((e)=>{
+            console.log({current},{date});
             return e.aggregate([
                 {$match:{expire:{$gte:current,$lte:date}}},
                 {$match:{userId:user._id}},

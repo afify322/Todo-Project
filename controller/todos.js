@@ -78,11 +78,13 @@ exports.sendEmail=(req,res)=>{
 var transporter = nodemailer.createTransport({
   host:'smtp.gmail.com',
   port: 587,
-  secure: true,
+  secure: false,
   auth:{
     user:'afify322@gmail.com',
     pass:process.env.EmailPassword
-  }
+  } ,tls: {
+    ciphers:'SSLv3'
+}
 });
 
 var mailOptions = {
