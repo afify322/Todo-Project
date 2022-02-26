@@ -27,7 +27,7 @@ $(document).ready(function (params) {
   }))
 
   $('body').on('click','.addTodo',function (e) {
-    $('#addList').val($(this).prev().text())
+    $('#addList').text($(this).prev().text())
   })
 
   $('#groupByDay').change(function () {
