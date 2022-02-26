@@ -5,8 +5,8 @@ var nodemailer = require('nodemailer');
 
 
 exports.check=async (req,res)=>{
-    var newDateObj = moment(new Date()).add(30, 'm').toDate();
-  var current=new Date();
+    var newDateObj = moment(new Date()).add(150, 'm').toDate();
+  var current=moment(new Date()).add(60, 'm').toDate();
     var t=await todos.expire(req.session.user,newDateObj,current);
     console.log({t},new Date());
     res.json(t)
