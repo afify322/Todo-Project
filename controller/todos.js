@@ -6,7 +6,7 @@ var nodemailer = require('nodemailer');
 
 exports.check=async (req,res)=>{
     var newDateObj = moment(new Date()).add(150, 'm').toDate();
-  var current=moment(new Date()).add(60, 'm').toDate();
+  var current=moment(new Date()).add(120, 'm').toDate();
     var t=await todos.expire(req.session.user,newDateObj,current);
     console.log({t},new Date());
     res.json(t)
@@ -78,7 +78,7 @@ exports.sendEmail=(req,res)=>{
 var transporter = nodemailer.createTransport({
   host:'smtp.gmail.com',
   port: 587,
-  secure: false,
+  secure: true,
   auth:{
     user:'afify322@gmail.com',
     pass:process.env.EmailPassword
