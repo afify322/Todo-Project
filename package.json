@@ -24,7 +24,8 @@
   "test": "echo 'hello'",
   
     
-  "start": "nodemon app.js"
+  "start": "node app.js",
+  "dev": "nodemon app.js"
   
   },
   
