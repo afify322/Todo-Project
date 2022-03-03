@@ -6,8 +6,9 @@ $(document).ready(function (params) {
      url:'https://my-2dos.herokuapp.com/todos/setCalender',
      method:"get",
      success:function (e) {
+       console.log(e);
        var arr=e.map((e)=>{
-         return {title:e.name,start:new Date(e.cyear, e.cmonth-1, e.cday, e.chour, e.cminutes),end:new Date(e.year, e.month-1, e.day+1, e.hour+1, e.minutes),backgroundColor: getRandomColor()}
+         return {title:e.name,start:new Date(e.cyear, e.cmonth-1, e.cday, e.chour, e.cminutes),end:new Date(e.year, e.month-1, e.day, e.hour, e.minutes),backgroundColor: getRandomColor()}
        })
        var calendar
        return calendar = $('#myEvent').fullCalendar({

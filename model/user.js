@@ -39,7 +39,7 @@ module.exports= class User{
         }
     static update(id,data){
         return db.collection('user').then((e)=>{
-            return e.updateOne({_id:id},data)
+            return e.updateOne({_id:id},{$set:data})
         })
     }
 

@@ -37,9 +37,26 @@ exports.insert=async(req,res)=>{
     }
 }
 
-exports.contReg=(req,res)=>{
-    var id=req.params.userId;
+
+exports.getContReg=(req,res)=>{
+    
+    res.render('image');
+}
+exports.contReg=async (req,res)=>{
+    const {_id}=req.session.user
+    if(req.file){
+
+        const path = req.file.path;
+         await user.update(_id,{image:path});
+         req.session.user.image=path
+    
+      return  res.redirect('/todos/main') 
     }
+    return res.render('image',{errors:{image:"image is required"}})
+
+    }
+
+
 exports.getUsers=async(req,res)=>{
     var users=await user.findOne()
     //res.render('login.hbs',{users:users})
@@ -64,9 +81,11 @@ exports.login=async(req,res)=>{
         var userData =await user.findOne({email:req.body.email})
         var password=await bcryprt.compare(req.body.password,userData.password)
        if(password)
-       {
-       
-         req.session.user=userData
+       {    
+           req.session.user=userData
+           if(userData.image==null){
+            return res.redirect('/auth/contReg')
+           }
            return res.redirect('/todos/main')
        }
        else
@@ -77,6 +96,5 @@ exports.login=async(req,res)=>{
 
 exports.logout=((req,res)=>{
     req.session.destroy();
-    console.log("dsdw");
     res.redirect('/auth/login')
 })

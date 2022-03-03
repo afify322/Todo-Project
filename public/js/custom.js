@@ -11,7 +11,8 @@ $(document).ready(function (params) {
  /*  $('#updateModal')
   $('#updateForm')
  */
-  
+
+
 
   $('body').on('click','.update',(function (e) {
     var id=$(this).val()
@@ -71,6 +72,8 @@ $("body").on('click','#swal-6',function (e) {
         swal('Your Todo is safe!');
       }
     });
+
+
 });
 
 

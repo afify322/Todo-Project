@@ -1,17 +1,22 @@
 const router=require('express').Router();
 const user=require('../controller/user')
 const { body, validationResult,check } = require('express-validator');
+require('../middleware/images')
 const parser=require('../middleware/images').parser
 const passport=require('passport')
 const User=require('../model/user');
 const auth2=require('../middleware/auth').authGuard2
+const auth=require('../middleware/auth').authGuard
 const google=require('../middleware/passportGoogle').google
-//const twitter=require('../middleware/passportTwitter').twitter
 
 
 
 router.get('/logout',user.logout)
 router.get('/reg',auth2,user.getReg);
+
+router.get('/contReg',auth,user.getContReg);
+router.post('/contReg',auth,parser,user.contReg);
+
 router.get('/login',auth2,user.getLogin)
 
 router.post('/login',auth2,
@@ -59,6 +64,8 @@ router.post('/user',auth2,
 body('email').custom(value => {
   return User.findOne({email:value}).then(user => {
     if (user) {
+      console.log(user);
+
       return Promise.reject('E-mail already in use');
     }
   });
@@ -76,7 +83,6 @@ body('password2').custom((value, { req }) => {
   return true;
 }),
 user.insert);
-
 router.patch('/user',auth2,user.edit)
 
 module.exports=router

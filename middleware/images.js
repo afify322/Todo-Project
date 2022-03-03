@@ -8,7 +8,7 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 const fileFilter = (req, file, cb) => {
-
+  if(file){
   if (
     file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'
   ) {
@@ -16,6 +16,7 @@ const fileFilter = (req, file, cb) => {
   } else {
     cb(null, false);
   }
+}
 };
 const storage = new CloudinaryStorage({
   cloudinary,
