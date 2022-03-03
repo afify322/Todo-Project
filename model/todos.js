@@ -15,9 +15,11 @@ module.exports=class Todos{
         this.desc=desc;
         this.expire=new Date(expire)
         this.finished=finished;
-        this.createdAt=new Date()
+        this.createdAt=moment(new Date()).add(120, 'm').toDate();
 
-        this.modifiedAt=new Date()
+
+        this.modifiedAt=moment(new Date()).add(120, 'm').toDate();
+
         this.deleted=false;
 
     }
@@ -144,7 +146,6 @@ module.exports=class Todos{
 
       static expire(user,date,current){
         return db.collection('todos').then((e)=>{
-            console.log({current},{date});
             return e.aggregate([
                 {$match:{expire:{$gte:current,$lte:date}}},
                 {$match:{userId:user._id}},

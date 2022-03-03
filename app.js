@@ -35,8 +35,8 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      'img-src': ["'self'", '*.cloudinary.com','*.my-2dos.herokuapp.com','*.lh3.googleusercontent.com'],
-      'default-src':["'self'",'*.cloudinary.com','*.my-2dos.herokuapp.com','*.lh3.googleusercontent.com'],
+      'img-src': ["'self'", '*.cloudinary.com','*.my-2dos.herokuapp.com','https://lh3.googleusercontent.com'],
+      'default-src':["'self'",'*.cloudinary.com','*.my-2dos.herokuapp.com','https://.lh3.googleusercontent.com'],
       'connect-src':["'self'",'*.cloudinary.com','https://my-2dos.herokuapp.com','*.lh3.googleusercontent.com']
     }
   })
