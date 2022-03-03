@@ -7,9 +7,15 @@
   "description": "simple app for management tasks",
   
   "main": "app.js",
- "engines":{
-    "npm":"8.x",
-    "node":"16.x"
+  
+  "engines": {
+  
+    
+  "npm": "8.x",
+  
+    
+  "node": "16.x"
+  
   },
   
   "scripts": {
@@ -125,6 +131,9 @@
   
     
   "mongoose": "^6.2.0",
+  
+    
+  "morgan": "^1.10.0",
   
     
   "multer": "^1.4.4",

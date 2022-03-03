@@ -12,7 +12,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const cors=require('cors')
 //app.use(helmet())
-
+const morgan=require('morgan');
 app.use(comperssion())
 app.use(bodyparser.urlencoded({extended:false}))
 app.use(bodyparser.json())
@@ -30,7 +30,7 @@ hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 
 const auth=require('./middleware/auth').authGuard
 const MongoDBStore=require('connect-mongodb-session')(session)
-
+app.use(morgan('combined'))
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
