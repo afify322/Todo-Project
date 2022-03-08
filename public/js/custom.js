@@ -19,7 +19,7 @@ $(document).ready(function (params) {
     var name=$(this).prev().text()
     var desc=$(this).parent().next().children(":first").text()
     var expire=$(this).parent().next().children(":first").next().attr('id')
-    console.log(expire.replace(' ','T').replaceAll('/','-').substring(0,16));
+    console.log(id,name,desc,expire);
     $('#updateDate').val(expire.replace(' ','T').replaceAll('/','-').substring(0,16))
     $('#updateForm').attr('action','/todos/updateTodo/'+id)
     $('#updateTask').val(name)
@@ -28,7 +28,7 @@ $(document).ready(function (params) {
   }))
 
   $('body').on('click','.addTodo',function (e) {
-    $('#addList').text($(this).prev().text())
+    $('#addList').val($(this).prev().text())
   })
 
   $('#groupByDay').change(function () {
@@ -37,6 +37,12 @@ $(document).ready(function (params) {
   window.location.href='/todos/groupByDay/'+x;
 
   })
+  $('#groupByFinish').change(function () {
+
+    var x=$(this).val();
+    window.location.href='/todos/groupByFinish/'+x;
+  
+    })
 
   $('#groupByMonth').change(function () {
     var x=$(this).val();
@@ -70,6 +76,33 @@ $("body").on('click','#swal-6',function (e) {
         
       } else {
         swal('Your Todo is safe!');
+      }
+    });
+
+
+});
+
+$("body").on('click','#swal-7',function (e) {
+  e.stopPropagation()
+ var id= $(this).val()
+  swal({
+    title: 'Finished your Task?',
+    text: '',
+    icon: 'success',
+    buttons: true,
+    dangerMode: true,
+  })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal('Great Work', {
+          icon: 'success',
+        });
+        setTimeout(()=>{
+          window.location.href='/todos/updateTodo/'+id;
+        },1000)
+        
+      } else {
+        swal('Keep Motivated !');
       }
     });
 

@@ -6,7 +6,7 @@ var nodemailer = require('nodemailer');
 
 exports.check=async (req,res,next)=>{
     var newDateObj = moment(new Date()).add(150, 'm').toDate();
-  var current=moment(new Date()).add(120, 'm').toDate();
+    var current=moment(new Date()).add(120, 'm').toDate();
     var t=await todos.expire(req.session.user,newDateObj,current);
     res.json(t)
 }
@@ -19,8 +19,7 @@ exports.getTodos=async(req,res,next)=>{
    if(!req.session.user.image){
     req.session.user.image='/../img/profile.jpg'
    }
-   var img=` <img src="${req.session.user.image}"  style="width: 100%;" >`
-    res.render('main',{data:result,user:req.session.user,img})
+    res.render('main',{data:result,user:req.session.user})
 }
 
 exports.getAddTodo=(req,res,next)=>{
@@ -37,6 +36,7 @@ exports.deleteTodo=async(req,res,next)=>{
 
 exports.add=async (req,res,next)=>{
     var {name,desc,list,expire}=req.body    
+    
     await new todos(req.session.user._id,name,desc,list,false,expire).save()
     res.redirect('/todos/main')
 }
@@ -45,21 +45,30 @@ exports.add=async (req,res,next)=>{
 exports.groupByMonth=async(req,res,next)=>{
     var {month}=req.params
     var list=await todos.month(month,req.session.user)
-     res.render('main',{data:list})
+     res.render('main',{data:list,user:req.session.user})
 }
 
 exports.groupByDay=async(req,res,next)=>{
     var {day}=req.params
     var list=await todos.day(day,req.session.user);
-  res.render('main',{data:list})
+  res.render('main',{data:list,user:req.session.user})
 }
 
-exports.updateTodo=async(req,res,next)=>{
-    var {id}=req.params
-    req.body.expire=new Date(req.body.expire)
-    await todos.update(id,req.body)
-   return res.redirect('/todos/main')
+exports.groupByFinish=async(req,res)=>{
+  var {finished}=req.params;
+  var list=await todos.groupByFinished(finished=='inProgress' ? false : true,req.session.user);
+
+  res.render('main',{data:list,user:req.session.user})
 }
+
+
+exports.updateTodo=async(req,res,next)=>{
+  var {id}=req.params
+  var modifiedAt=moment(new Date()).add(120, 'm').toDate();
+  await todos.update(id,{modifiedAt:modifiedAt,finished:true})
+ return res.redirect('/todos/main')
+}
+
 exports.calender=(req,res,next)=>{
     if(!req.session.user.image){
         req.session.user.image='/../img/profile.jpg'

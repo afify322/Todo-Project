@@ -27,6 +27,12 @@ hbs.registerPartial('sideBar',"{{sideBar}}")
 hbs.registerPartial('settings',"{{settings}}")
 hbs.registerPartial('footer',"{{footer}}")
 hbs.registerPartials(__dirname + '/views/partials', function (err) {});
+hbs.registerHelper('ifCond', function(v1, v2, options) {
+  if(v1 == v2) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
 
 const auth=require('./middleware/auth').authGuard
 const MongoDBStore=require('connect-mongodb-session')(session)

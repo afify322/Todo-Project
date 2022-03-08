@@ -10,7 +10,7 @@
           <div class="section-body">
             <div class="row">
 
-             <div class="col-3 col-md-4 col-lg-4 offset-2">
+             <div class="col-3 col-md-4 col-lg-4 offset-1">
                 <div class="card">
                   
                   <div class="card-body d-flex justify-content-center align-items-center">
@@ -20,7 +20,8 @@
                   </div>
                 </div>
               </div>
-                 <div class="col-3 col-md-4 col-lg-4 ">
+              
+                 <div class="col-3 col-md-4 col-lg-6 ">
                 <div class="card">
                   
                   <div class="card-body d-flex justify-content-between align-items-center">
@@ -28,6 +29,11 @@
                       
 
                     <i class="fas fa-filter primary"></i>
+                    <select id="groupByFinish" name="finish" type="button" class="btn  btn-primary " >
+                         <option value="" disabled selected>Status</option>
+                         <option value="inProgress">In Progress</option>
+                         <option value="done" >Done</option>
+                    </select>
 
                        <input type="date" id="groupByDay" name="day" class="btn btn-primary" >
                       </input>
@@ -66,16 +72,35 @@
                     <div id="accordion">
                       {{!-- this.todo --}}
                       {{#each todo.todo as |x index|}}
-                      <div class="accordion">
+                      <div class="accordion" style="text-align: center;">
                         <div class="accordion-header d-flex justify-content-between"  role="button" data-toggle="collapse" data-target="#panel-body-{{x.id}}"
                           aria-expanded="true">
+                          {{#if x.finished}}
+                           <button class="btn btn-danger delete " id="swal-6" value="{{x.id}}" ><i class="fas fa-trash"></i></button>
+                          <span>{{x.name}}</span>
+                          {{/if}}
+
+                          {{#unless x.finished}}
                           <button class="btn btn-danger delete " id="swal-6" value="{{x.id}}" ><i class="fas fa-trash"></i></button>
                           <span>{{x.name}}</span>
                            <button class="btn btn-warning update" value="{{x.id}}" data-toggle="modal" data-target="#updateModal" ><i class="fas fa-pencil-alt"></i></button>
+                           <button class="btn btn-success finish " id="swal-7" value="{{x.id}}" ><i class="far fa-check-circle"></i></button>
+                          {{/unless}}
+
                         </div>
                         <div class="accordion-body collapse show" id="panel-body-{{x.id}}" data-parent="#accordion">
+                          {{#unless x.finished }}
+                          <div class="accordion-header bg-light" style="color:black;" >Status In Progress</div>
                           <p class="mb-0">{{x.desc}}</p>
                           <span class="date pull-center text-center" id="{{x.expire}}" style="margin: auto;">expected on {{x.expire}}</span>
+          
+                             {{/unless}}
+
+                             {{#if x.finished}}
+                           <div class="accordion-header bg-success" style="color:black;">Status Done</div>
+                              <p class="mb-0">{{x.desc}}</p>
+                            {{/if}}
+                       
                         </div>
                       </div>
                       {{/each}}
@@ -157,7 +182,7 @@
                     <div class="form-group">
                       <label>The List</label>
                     
-                        <span class="form-control datetimepicker" name="list" id="addList"></span>
+                        <input class="form-control datetimepicker" name="list"  id="addList" readonly>
                     </div>
                     <div class="form-group">
                       <label class="d-block">Deadline</label>
@@ -202,7 +227,7 @@
               </div>
 
               <div class="modal-body">
-                <form  id="updateForm" method="post">
+                <form  id="updateForm" method="get">
                  <div class="card-body">
                     <div class="form-group">
                       <label class="d-block">Deadline</label>
