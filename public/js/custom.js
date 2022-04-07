@@ -12,16 +12,62 @@ $(document).ready(function (params) {
   $('#updateForm')
  */
 
+  $('body').on('submit','#AddListForm',function(e) {
+    if(!$('#AddList').val() || !$('#taskList').val() || !$('#expireList').val()||!$('#descList').val()){
 
+      e.preventDefault();
+    }
+
+     if(!$('#AddList').val()){
+      $('#AddListDateError').css({
+        'display':'block'
+      })
+    }
+    else
+    $('#AddListDateError').css({
+      'display':'none'
+    }) 
+    if(!$('#descList').val()){
+      $('#descListError').css({
+        'display':'block'
+      })
+    }
+    else
+    $('#descListError').css({
+      'display':'none'
+    }) 
+
+    if(!$('#expireList').val()){
+      $('#expireListError').css({
+        'display':'block'
+      })
+    }
+    else{
+      $('#expireListError').css({
+        'display':'none'
+      })
+    }
+
+
+    if(!$('#taskList').val()){
+      $('#taskListError').css({
+        'display':'block'
+      })
+    }
+    else
+    $('#taskListError').css({
+      'display':'none'
+    })
+  })
 
   $('body').on('click','.update',(function (e) {
     var id=$(this).val()
     var name=$(this).prev().text()
-    var desc=$(this).parent().next().children(":first").text()
-    var expire=$(this).parent().next().children(":first").next().attr('id')
+    var desc=$(this).parent().next().children(":first").next().text()
+    var expire=$(this).parent().next().children(":last").attr('id')
     console.log(id,name,desc,expire);
     $('#updateDate').val(expire.replace(' ','T').replaceAll('/','-').substring(0,16))
-    $('#updateForm').attr('action','/todos/updateTodo/'+id)
+    $('#UpadteForm').attr('action','/todos/updateTodo/'+id)
     $('#updateTask').val(name)
     $('#updateDesc').val(desc)
     
@@ -29,6 +75,79 @@ $(document).ready(function (params) {
 
   $('body').on('click','.addTodo',function (e) {
     $('#addList').val($(this).prev().text())
+  })
+
+  $('body').on('submit','#AddForm',function(e) {
+    if(!$('#dateAddFrom').val() || !$('#desc').val()||!$('#task').val()){
+
+      e.preventDefault();
+    }
+
+     if(!$('#dateAddFrom').val()){
+      $('#expireError').css({
+        'display':'block'
+      })
+    }
+    else
+    $('#expireError').css({
+      'display':'none'
+    }) 
+    if(!$('#task').val()){
+      $('#taskError').css({
+        'display':'block'
+      })
+    }
+    else{
+      $('#taskError').css({
+        'display':'none'
+      })
+    }
+
+    if(!$('#desc').val()){
+      $('#descError').css({
+        'display':'block'
+      })
+    }
+    else
+    $('#descError').css({
+      'display':'none'
+    })
+  })
+  $('body').on('submit','#UpadteForm',function(e) {
+    if(!$('#updateDate').val() || !$('#updateDesc').val()||!$('#updateTask').val()){
+
+      e.preventDefault();
+    }
+
+     if(!$('#updateDate').val()){
+      $('#updateExpireError').css({
+        'display':'block'
+      })
+    }
+    else
+    $('#updateExpireError').css({
+      'display':'none'
+    }) 
+    if(!$('#updateTask').val()){
+      $('#updateTaskError').css({
+        'display':'block'
+      })
+    }
+    else{
+      $('#updateTaskError').css({
+        'display':'none'
+      })
+    }
+
+    if(!$('#updateDesc').val()){
+      $('#updateDescError').css({
+        'display':'block'
+      })
+    }
+    else
+    $('#updateDescError').css({
+      'display':'none'
+    })
   })
 
   $('#groupByDay').change(function () {
@@ -98,7 +217,7 @@ $("body").on('click','#swal-7',function (e) {
           icon: 'success',
         });
         setTimeout(()=>{
-          window.location.href='/todos/updateTodo/'+id;
+          window.location.href='/todos/finishTodo/'+id;
         },1000)
         
       } else {

@@ -54,15 +54,10 @@ Date.prototype.addHours = function(h) {
           })
       }
       static update(id,data){
+          console.log(data);
           return db.collection('todos').then((e)=>{
-          
               return e.updateOne({_id:ObjectId(id)},{$set:data})
-          }).then((e)=>{
-              console.log(e);
-          }).catch((e)=>{
-              console.log(e);
           })
-  
       }
   
   
@@ -89,7 +84,7 @@ Date.prototype.addHours = function(h) {
           })
       }
   
-      static test(user){
+      static getTodos(user){
           return db.collection('todos').then((e)=>{
               return e.aggregate([
                   {$match:{userId:user._id}},
@@ -119,7 +114,6 @@ Date.prototype.addHours = function(h) {
         }
   
         static groupByFinished(finish,user){
-            console.log(finish,Boolean(finish));
           return db.collection('todos').then((e)=>{
           return  e.aggregate(
                 [

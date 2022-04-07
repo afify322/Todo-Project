@@ -1,7 +1,16 @@
  <div class="navbar-bg"></div>
       <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
-       
+       <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+									collapse-btn"> <i data-feather="align-justify"></i></a></li>
+            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                <i data-feather="maximize"></i>
+              </a></li>
+            <li>
+             
+            </li>
+          </ul>
         </div>
         <ul class="navbar-nav navbar-right">
           <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
@@ -21,7 +30,7 @@
           <li class="dropdown"><a href="#" data-toggle="dropdown"
               class="nav-link dropdown-toggle nav-link-lg nav-link-user"> 
           <figure class="avatar mr-2 xx">
-                      <img class="profileImage" src="{{user.image}}"  style="width: 100%;" >
+                      <img class="profileImage" src="{{user.image}}" id="{{user.fname}} {{user.lname}}" style="width: 100%;" >
                       <i class="avatar-presence online"></i>
                     </figure>
                 
@@ -55,6 +64,9 @@
               
             <li class="dropdown">
               <a href="/todos/calender" class="nav-link "><i class="fas fa-calendar-alt"></i><span>Calender</span></a>
+            </li>
+            <li class="dropdown">
+              <a href="/todos/chat" class="nav-link "><i class="fab fa-facebook-messenger"></i><span>Chat Room</span></a>
             </li>
          
          </ul>

@@ -129,26 +129,32 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form action="/todos/addTodo" method="post">
+                <form action="/todos/addTodo" id="AddListForm" method="post">
                  <div class="card-body">
                     <div class="form-group">
                       <label>The List</label>
-                     <input type="text" value="" class="form-control datetimepicker" name="list" id="" >
-  
+                     <input type="text" value="" class="form-control datetimepicker" name="list" id="AddList" >
+                        <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="AddListDateError" role="alert">List name is Required</div>
+
                     </div>
                     <div class="form-group">
                       <label class="d-block">Deadline</label>
                       
-                      <input type="datetime-local" name="expire" class="btn btn-primary daterange-btn icon-left btn-icon" required>
+                      <input type="datetime-local" name="expire" class="btn btn-primary daterange-btn icon-left btn-icon" id="expireList">
+                      <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="expireListError" role="alert">Date is Required</div>
                     
                     </div>
                     <div class="form-group">
                       <label>Task</label>
-                      <input type="text" name="name" class="form-control datepicker" required>
+                      <input type="text" name="name" class="form-control datepicker" id="taskList">
+                      <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="taskListError" role="alert">Task name is Required</div>
+                   
                     </div>
                     <div class="form-group">
                       <label>Description</label>
-                      <input type="text" class="form-control datetimepicker" name="desc" required>
+                      <input type="text" class="form-control datetimepicker" name="desc" id="descList">
+                      <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="descListError" role="alert">Description is Required</div>
+                    
                     </div>
                    
                     <div class="form-group">
@@ -177,7 +183,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form action="/todos/addTodo" method="post">
+                <form action="/todos/addTodo" id="AddForm" method="post">
                  <div class="card-body">
                     <div class="form-group">
                       <label>The List</label>
@@ -187,16 +193,21 @@
                     <div class="form-group">
                       <label class="d-block">Deadline</label>
                       
-                      <input type="datetime-local" name="expire" class="btn btn-primary daterange-btn icon-left btn-icon" required>
-                    
+                      <input type="datetime-local" name="expire" id="dateAddFrom" value="" class="btn btn-primary daterange-btn icon-left btn-icon">
+                      <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="expireError" role="alert">Date is Required</div>
+
                     </div>
                     <div class="form-group">
                       <label>Task</label>
-                      <input type="text" name="name" class="form-control datepicker" required>
+                      <input type="text" name="name" id="task" value=""  class="form-control datepicker" >
+                      <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="taskError" role="alert">Task is Required</div>
+
                     </div>
                     <div class="form-group">
                       <label>Description</label>
-                      <input type="text" class="form-control datetimepicker" name="desc" required>
+                      <input type="text" class="form-control datetimepicker" value="" id="desc" name="desc" >
+                      <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="descError" role="alert">Description is Required</div>
+
                     </div>
                    
                     <div class="form-group">
@@ -227,21 +238,24 @@
               </div>
 
               <div class="modal-body">
-                <form  id="updateForm" method="get">
+                <form  id="UpadteForm"  method="post">
                  <div class="card-body">
                     <div class="form-group">
                       <label class="d-block">Deadline</label>
                       
                       <input type="datetime-local" id="updateDate"  name="expire" class="btn btn-primary daterange-btn icon-left btn-icon" >
-                    
+                      <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="updateExpireError" role="alert">Expire Date is Required</div>
+
                     </div>
                     <div class="form-group">
                       <label>Task</label>
                       <input type="text" id="updateTask" name="name" class="form-control datepicker" >
+                       <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="updateTaskError" role="alert">Task name is Required</div>
                     </div>
                     <div class="form-group">
                       <label>Description</label>
                       <input type="text" id="updateDesc" class="form-control datetimepicker" name="desc" >
+                      <div class="alert alert-danger alert-dismissible fade show" style="display: none;" id="updateDescError" role="alert">Description is Required</div>
                     </div>
                    
                     <div class="form-group">

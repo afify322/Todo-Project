@@ -1,0 +1,154 @@
+{{>header}}
+<style>
+  form {
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    margin: auto;
+    width: 300px;
+   
+  }
+
+  #messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  #messages li.right{
+    color: aliceblue;
+   align-self: flex-end;
+   background: #283c86;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #45a247, #283c86);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #45a247, #283c86); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    border-radius: 10px;
+    width: 70%;
+
+  }
+  #messages li.left , #messages li.right{
+       align-items: center;
+           display: flex;
+    justify-content: space-around;
+  }
+  ul{
+     display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+   #messages li.left {
+     color: aliceblue;
+  
+   
+  background: #373B44;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    border-radius: 10px;
+    width: 70%;
+
+  }
+  .row{
+    width: 100%;
+  }
+  .chat-about , .chat-with{
+    width: 100%;
+  }
+  img{
+
+  }
+  #m{
+    width: 80%;
+    
+  }
+  .input-group{
+    width: 500px;
+  }
+  #send{
+    height: 100%;
+  }
+</style>
+
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      {{>sideBar}}
+
+
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+
+              <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 offset-2">
+                <div class="card" style="overflow-x: auto;height:500px;">
+                  <div class="chat"style="overflow-x: auto;height:500px;">
+                    <div class="chat-header clearfix" style="overflow-y: scroll;height:500px;" >
+                      <div class="chat-about" >
+                        <div class="chat-with">Main Rooom</div>
+                       <div class="row" >
+                      <ul id="messages" style="overflow-x: auto;max-hieght:500px;"></ul>
+                       </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                    
+                    <div class="row">
+                      <div class="col-lg-9 offset-2">
+                        <form action="" id="">
+                          <div class="input-group">
+                            <input id="m" autocomplete="off" type="text" class="form-control" placeholder="Message..."
+                              aria-label="Message...">
+                            <span class="input-group-btn">
+                              
+                              <button class="btn btn-secondary" id="send">Send</button>
+                            </span>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {{>settings}}
+      </div>
+
+
+      <footer class="main-footer">
+        <div class="footer-left">
+
+        </div>
+        <div class="footer-right">
+        </div>
+      </footer>
+    </div>
+
+  </div>
+  <!-- General JS Scripts -->
+
+  <script src="/../js/app.min.js"></script>
+  <script src="/../js/socket.io.js"></script>
+
+  <!-- JS Libraies -->
+  <script src="/../js/chat.js"></script>
+  <!-- Page Specific JS File -->
+  <!-- Template JS File -->
+  <!-- Page Specific JS File -->
+  <!-- Page Specific JS File -->
+  <script src="/../js/scripts.js"></script>
+  <!-- Custom JS File -->
+
+  <script src="/../js/custom.js"></script>
+  </script>
+</body>
+
+
+<!-- collapse.html  21 Nov 2019 03:51:00 GMT -->
+
+</html>

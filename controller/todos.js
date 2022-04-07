@@ -1,121 +1,163 @@
-const todos=require('../model/todos')
+const Todos = require('../model/todos');
+const redisClient = require('../middleware/redis').client;
+const moment = require('moment');
+const nodemailer = require('nodemailer');
 
-const moment=require('moment')
-var nodemailer = require('nodemailer');
-
-
-exports.check=async (req,res,next)=>{
-    var newDateObj = moment(new Date()).add(150, 'm').toDate();
-    var current=moment(new Date()).add(120, 'm').toDate();
-    var t=await todos.expire(req.session.user,newDateObj,current);
-    res.json(t)
+/* async function setRedisData(name, value) {
+  const redis = await redisClient();
+  const result = await redis.set(name, value);
+  return result;
 }
-exports.getHome=(req,res,next)=>{
-    res.render('index');
-}
-exports.getTodos=async(req,res,next)=>{
+async function getRedisData(name) {
+  const redis = await redisClient();
+  const result = await redis.get(name);
+  return result;
+} */
 
-    var result=await todos.test(req.session.user)
-   if(!req.session.user.image){
-    req.session.user.image='/../img/profile.jpg'
-   }
-    res.render('main',{data:result,user:req.session.user})
-}
+exports.check = async (req, res, _next) => {
+  const newDateObj = moment(new Date()).add(150, 'm').toDate();
+  const current = moment(new Date()).add(120, 'm').toDate();
+  const t = await Todos.expire(req.session.user, newDateObj, current);
+  res.json(t);
+};
+exports.getHome = async (req, res, next) => {
+  res.render('index');
+};
+exports.chat = async (req, res, next) => {
+  const { session: { user } } = req;
 
-exports.getAddTodo=(req,res,next)=>{
-   var list=req.params.list
-    res.render('addTodo',{list:list})
-}
-exports.deleteTodo=async(req,res,next)=>{
-    var id=req.params.id;
-    await todos.delete(id)
-    return res.redirect('/todos/main')
+  res.render('chat',{user});
+};
+exports.getTodos = async (req, res, _next) => {
+  const { session: { user } } = req;
 
-}
-
-
-exports.add=async (req,res,next)=>{
-    var {name,desc,list,expire}=req.body    
-    
-    await new todos(req.session.user._id,name,desc,list,false,expire).save()
-    res.redirect('/todos/main')
-}
-
-
-exports.groupByMonth=async(req,res,next)=>{
-    var {month}=req.params
-    var list=await todos.month(month,req.session.user)
-     res.render('main',{data:list,user:req.session.user})
-}
-
-exports.groupByDay=async(req,res,next)=>{
-    var {day}=req.params
-    var list=await todos.day(day,req.session.user);
-  res.render('main',{data:list,user:req.session.user})
-}
-
-exports.groupByFinish=async(req,res)=>{
-  var {finished}=req.params;
-  var list=await todos.groupByFinished(finished=='inProgress' ? false : true,req.session.user);
-
-  res.render('main',{data:list,user:req.session.user})
-}
-
-
-exports.updateTodo=async(req,res,next)=>{
-  var {id}=req.params
-  var modifiedAt=moment(new Date()).add(120, 'm').toDate();
-  await todos.update(id,{modifiedAt:modifiedAt,finished:true})
- return res.redirect('/todos/main')
-}
-
-exports.calender=(req,res,next)=>{
-    if(!req.session.user.image){
-        req.session.user.image='/../img/profile.jpg'
-       }
-    res.render('calender',{user:req.session.user})
-}
-
-exports.groupByDate=async (req,res,next)=>{
-  try {
-    var list= await todos.groupByDate(req.session.user)
-     return res.json(list)
-    
-  } catch (error) {
-    return res.render('404')
+  if (!user.image) {
+    user.image = '/../img/profile.jpg';
   }
-}
+ /*  const redisData = await getRedisData(`${user._id}todos`);
 
-exports.sendEmail=(req,res,next)=>{
-    
+  if (redisData) {
+    return res.render('main', { data: JSON.parse(redisData), user });
+  } */
 
-var transporter = nodemailer.createTransport({
-  host:'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth:{
-    user:'afify322@gmail.com',
-    pass:process.env.EmailPassword
-  } ,tls: {
-    ciphers:'SSLv3'
-}
-});
-
-var mailOptions = {
-  from: 'afify322@gmail.com',
-  to: req.session.user.email,
-  subject: req.query.title,
-  text: req.query.msg
+  const result = await Todos.getTodos(user);
+  //await setRedisData(`${user._id}todos`, JSON.stringify(result));
+  return res.render('main', { data: result, user });
 };
 
-transporter.sendMail(mailOptions, function(error, info){
-    
-  if (error) {
-    return res.status(500).send(error)
-  } else {
-    return res.send(info.response)
-  }
-});  
+exports.getAddTodo = (req, res, _next) => {
+  const { parmas: { list } } = req;
+  res.render('addTodo', { list });
+};
 
+exports.deleteTodo = async (req, res, _next) => {
+  const { params: { id }, session: { user } } = req;
+  await Todos.delete(id);
+ // const lists = await Todos.getTodos(user);
+  //await setRedisData(`${user._id}todos`, JSON.stringify(lists));
+  return res.redirect('/todos/main');
+};
 
+exports.add = async (req, res, _next) => {
+  const { session: { user } } = req;
+  const {
+    name, desc, list, expire,
+  } = req.body;
+  await new Todos(user._id, name, desc, list, false, expire).save();
+ // const todoLists = await Todos.getTodos(user);
+ // await setRedisData(`${user._id}todos`, JSON.stringify(todoLists));
+  res.redirect('/todos/main');
+};
+
+exports.groupByMonth = async (req, res, _next) => {
+  const { session: { user } } = req;
+  const { params: { month } } = req;
+  const list = await Todos.month(month, user);
+  res.render('main', { data: list, user });
+};
+
+exports.groupByDay = async (req, res) => {
+  const { session: { user } } = req;
+  const { params: { day } } = req;
+  const list = await Todos.day(day, user);
+  res.render('main', { data: list, user });
+};
+
+exports.groupByFinish = async (req, res) => {
+  const { session: { user } } = req;
+  const { params: { finished } } = req;
+  const list = await Todos.groupByFinished(finished !== 'inProgress', user);
+
+  res.render('main', { data: list, user: req.session.user });
+};
+
+exports.finishTodo = async (req, res, _next) => {
+  const { params: { id } } = req;
+ 
+  const { session: { user } } = req;
+  const modifiedAt = moment(new Date()).add(120, 'm').toDate();
+  await Todos.update(id, { modifiedAt, finished: true });
+  //const todoLists = await Todos.getTodos(user);
+ // await setRedisData(`${user._id}todos`, JSON.stringify(todoLists));
+  return res.redirect('/todos/main');
+};
+
+exports.updateTodo= async (req,res)=>{
+  const { params : { id } } = req;
+  let { body } = req;
+  const { session: { user } } = req;
+  const modifiedAt = moment(new Date()).add(120, 'm').toDate();
+  body.modifiedAt=modifiedAt;
+  body.expire=moment(new Date(body.expire)).add(120, 'm').toDate();
+  await Todos.update(id, body );
+ // const todoLists = await Todos.getTodos(user);
+ // await setRedisData(`${user._id}todos`, JSON.stringify(todoLists));
+  return res.redirect('/todos/main');
 }
+
+exports.calender = (req, res, _next) => {
+  const { session: { user } } = req;
+  if (!user.image) {
+    user.image = '/../img/profile.jpg';
+  }
+  res.render('calender', { user });
+};
+
+exports.groupByDate = async (req, res, _next) => {
+  const { session: { user } } = req;
+  try {
+    const list = await Todos.groupByDate(user);
+    return res.json(list);
+  } catch (error) {
+    return res.render('404');
+  }
+};
+
+exports.sendEmail = (req, res, _next) => {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'afify322@gmail.com',
+      pass: process.env.EmailPassword,
+    },
+    tls: {
+      ciphers: 'SSLv3',
+    },
+  });
+
+  const mailOptions = {
+    from: 'afify322@gmail.com',
+    to: req.session.user.email,
+    subject: req.query.title,
+    text: req.query.msg,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return res.status(500).send(error);
+    }
+    return res.send(info.response);
+  });
+};

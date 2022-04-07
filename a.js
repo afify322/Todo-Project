@@ -17,3 +17,7 @@ for(var i=0; i< btns.length; i++){
     e.stopPropagation()
   })
 
+  var x="sd";
+  x.toLowerCase().trim().replace(/\D/g,'')
+  x.split(',').reverse().t
+

@@ -25,6 +25,8 @@
   
     
   "start": "node app.js",
+  
+    
   "dev": "nodemon app.js"
   
   },
@@ -164,11 +166,23 @@
   "passport-twitter": "^0.1.5",
   
     
+  "redis": "^4.0.4",
+  
+    
   "socket.io": "^4.4.1"
   
   },
   
   "devDependencies": {
+  
+    
+  "eslint": "^8.11.0",
+  
+    
+  "eslint-config-airbnb-base": "^15.0.0",
+  
+    
+  "eslint-plugin-import": "^2.25.4",
   
     
   "js-cookie": "^3.0.1",
