@@ -42,7 +42,7 @@ hbs.registerHelper('ifCond', function (v1, v2, options) {
 
 const auth = require('./middleware/auth').authGuard;
 
-//app.use(morgan('combined'));
+app.use(morgan('combined'));
 app.use(security);
 app.use(session);
 app.use(passport.initialize());
@@ -62,7 +62,7 @@ app.use('/', todo.getHome);
 app.use((req, res) => {
   res.render('404');
 });
-server.listen(port,()=>console.log("4000"));
+server.listen(port,()=>console.log(port));
 const tech = io.of('/tech');
 
 tech.on('connection', (socket) => {
