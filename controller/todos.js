@@ -87,7 +87,7 @@ exports.groupByFinish = async (req, res) => {
   const { session: { user } } = req;
   const { params: { finished } } = req;
   const list = await Todos.groupByFinished(finished !== 'inProgress', user);
-
+  
   res.render('main', { data: list, user: req.session.user });
 };
 
